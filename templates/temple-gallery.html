@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Temple Gallery - Barkur Temples</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="gallery-section">
+        <h1>Temple Gallery</h1>
+        <div id="galleryContainer" class="gallery-container">
+            <!-- Gallery photos will be loaded here -->
+        </div>
+<a href="{{ url_for('temple_info_page', temple_id=request.args.get('id')) }}" class="back-to-temple-info">Back to Temple Info</a>
+    </section>
+
+    <footer>
+        <p>© 2025 Barkur Temples. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script>
+        fetch("{{ url_for('static', filename='header.html') }}")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                if (localStorage.getItem("darkMode") === "enabled") {
+                    document.body.classList.add("dark-mode");
+                    const icon = document.getElementById("modeIcon");
+                    if (icon) icon.textContent = "☀️";
+                }
+
+                document.getElementById("darkModeToggle")?.addEventListener("click", function () {
+                    const isDark = document.body.classList.toggle("dark-mode");
+                    localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+
+                    const icon = document.getElementById("modeIcon");
+                    if (icon) {
+                        icon.classList.add("rotate");
+                        setTimeout(() => {
+                            icon.textContent = isDark ? "☀️" : "🌙";
+                            icon.classList.remove("rotate");
+                        }, 300);
+                    }
+                });
+            });
+
+        // Function to get query parameter by name
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        async function loadGallery(templeId) {
+            try {
+                const response = await fetch(`/temple/${templeId}/gallery`);
+                if (!response.ok) throw new Error('Failed to fetch gallery photos');
+                const photos = await response.json();
+
+                const container = document.getElementById('galleryContainer');
+                if (photos.length === 0) {
+                    container.innerHTML = '<p>No gallery photos available.</p>';
+                    return;
+                }
+
+                container.innerHTML = photos.map(photo => `
+                    <a href="${photo.url}" data-fancybox="gallery" data-caption="Gallery photo">
+                        <img src="${photo.url}" alt="Gallery photo" style="width: 300px; height: 200px; object-fit: cover; margin-bottom: 10px; border-radius: 8px; cursor: pointer;">
+                    </a>
+                `).join('');
+
+                $('[data-fancybox="gallery"]').fancybox({
+                    buttons: [
+                        "slideShow",
+                        "fullScreen",
+                        "thumbs",
+                        "close"
+                    ],
+                    loop: true,
+                    protect: true
+                });
+            } catch (error) {
+                console.error('Error loading gallery photos:', error);
+                const container = document.getElementById('galleryContainer');
+                container.innerHTML = '<p>Error loading gallery photos.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const templeId = getQueryParam('id');
+            if (templeId) {
+                loadGallery(templeId);
+            } else {
+                document.getElementById('galleryContainer').innerHTML = '<p>Temple ID not specified.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

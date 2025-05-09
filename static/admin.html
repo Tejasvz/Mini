@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Barkur Temples</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="admin-login-container">
+        <div class="admin-box">
+            <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+            <form id="adminForm" onsubmit="return login(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
+            </form>
+        </div>
+<div class="adminPanel" id="adminPanel" style="display: none;">
+    <h3>Edit Temple Information</h3>
+    <button id="addTempleBtn" title="Add New Temple" style="font-size: 24px; padding: 5px 10px; margin-bottom: 10px; cursor: pointer;">+ Add Temple</button>
+    <div id="templeList"></div>
+</div>
+    </div>
+    <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+      
+            // ✅ Apply dark mode if saved in localStorage
+            if (localStorage.getItem("darkMode") === "enabled") {
+              document.body.classList.add("dark-mode");
+              const icon = document.getElementById("modeIcon");
+              if (icon) icon.textContent = "☀️";
+            }
+      
+            // ✅ Setup dark mode toggle button
+            document.getElementById("darkModeToggle")?.addEventListener("click", function () {
+              const isDark = document.body.classList.toggle("dark-mode");
+              localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+      
+              const icon = document.getElementById("modeIcon");
+              if (icon) {
+                icon.classList.add("rotate");
+                setTimeout(() => {
+                  icon.textContent = isDark ? "☀️" : "🌙";
+                  icon.classList.remove("rotate");
+                }, 300);
+              }
+            });
+          });
+      </script>
+    <script src="script.js"></script>
+    <button id="topBtn" title="Go to top">&#8679;</button>
+</body>
+</html>

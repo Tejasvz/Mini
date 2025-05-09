@@ -1,0 +1,115 @@
+/* Layout styles: header, navigation, footer, main layout */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: white;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 55px;
+    font-weight: bold;
+    color: #000000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    margin-left: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 0px;
+    background: #333;
+    color: white;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .temple-card {
+        width: 90%;
+        height: auto;
+    }
+}
+
+/* Header button styles */
+.nav-links li a,
+.dark-mode-toggle {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-links a:hover {
+    color: aqua;
+    background: rgb(0, 0, 0);
+    box-shadow: black 0px 0px 10px;
+    transition: 0.3s;
+}
+
+.dark-mode-toggle {
+    background: rgb(0, 0, 0);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background: rgba(63, 63, 63, 0.877);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background: rgb(70, 68, 68);
+    box-shadow: black 0px 0px 10px;
+    transition: 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    background: rgb(0, 0, 0);
+    box-shadow: black 0px 0px 10px;
+    transition: 0.3s;
+}
+
+.dark-mode-toggle .icon {
+    display: inline-block;
+    transition: transform 0.5s ease;
+}
+
+.rotate {
+    transform: rotate(360deg);
+}
+
+body.dark-mode .logo {
+    color: white;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temple Navigation - Barkur Temples</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="navigation-section">
+        <h1>Navigate to Barkur Temples</h1>
+        <p>Find the locations of the temples and get directions from your location.</p>
+
+        <div class="map-container">
+            <!-- Embed Google Map showing the location of Barkur Temples -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11729.053557069496!2d74.7469!3d13.3459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb0a54c3d11d395%3A0x23de82a85a0c3212!2sBarkur!5e0!3m2!1sen!2sin!4v1614597454123!5m2!1sen!2sin" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+
+        <h2>Directions</h2>
+        <p>Enter your starting location to get detailed directions to each temple.</p>
+        <input type="text" id="location" placeholder="Enter your location">
+        <button onclick="getDirections()">Get Directions</button>
+    </section>
+
+    <footer>
+        <p>© 2025 Barkur Temples. All rights reserved.</p>
+    </footer>
+    <script>
+      fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+    
+          // ✅ Apply dark mode if saved in localStorage
+          if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+            const icon = document.getElementById("modeIcon");
+            if (icon) icon.textContent = "☀️";
+          }
+    
+          // ✅ Setup dark mode toggle button
+          document.getElementById("darkModeToggle")?.addEventListener("click", function () {
+            const isDark = document.body.classList.toggle("dark-mode");
+            localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+    
+            const icon = document.getElementById("modeIcon");
+            if (icon) {
+              icon.classList.add("rotate");
+              setTimeout(() => {
+                icon.textContent = isDark ? "☀️" : "🌙";
+                icon.classList.remove("rotate");
+              }, 300);
+            }
+          });
+        });
+    </script>
+    
+
+    <script src="script.js"></script>
+    <button id="topBtn" title="Go to top">&#8679;</button>
+</body>
+</html>

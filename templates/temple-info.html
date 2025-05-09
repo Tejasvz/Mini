@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Temple Information - Barkur Temples</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="search-section">
+        <input type="text" id="searchInput" placeholder="Search temples..." onkeyup="searchTemples()" />
+    </section>
+
+    <section class="temple-gallery">
+        <div id="templeContainer" class="gallery-container">
+            <!-- Temple images will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Modal for temple information -->
+    <div id="temple-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="temple-info"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Barkur Temples. All rights reserved.</p>
+    </footer>
+
+    <script>
+        fetch("{{ url_for('static', filename='header.html') }}")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                // ✅ Apply dark mode if saved in localStorage
+                if (localStorage.getItem("darkMode") === "enabled") {
+                    document.body.classList.add("dark-mode");
+                    const icon = document.getElementById("modeIcon");
+                    if (icon) icon.textContent = "☀️";
+                }
+
+                // ✅ Setup dark mode toggle button
+                document.getElementById("darkModeToggle")?.addEventListener("click", function () {
+                    const isDark = document.body.classList.toggle("dark-mode");
+                    localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+
+                    const icon = document.getElementById("modeIcon");
+                    if (icon) {
+                        icon.classList.add("rotate");
+                        setTimeout(() => {
+                            icon.textContent = isDark ? "☀️" : "🌙";
+                            icon.classList.remove("rotate");
+                        }, 300);
+                    }
+                });
+            });
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Gallery - Barkur Temples</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="gallery-section">
+        <h1>Interactive Gallery</h1>
+        <p>Explore the beauty and history of the Barkur Temples through a collection of stunning photographs.</p>
+
+        <div class="gallery-container">
+            <a href="Assets/Ekanatheshwari.png" data-fancybox="gallery">
+                <img src="Assets/Ekanatheshwari.png" alt="Temple 1">
+            </a>
+            <a href="Assets/Panchlingeshvara.png" data-fancybox="gallery">
+                <img src="Assets/Panchlingeshvara.png" alt="Temple 2">
+            </a>
+            <a href="Assets/Someshwar.png" data-fancybox="gallery">
+                <img src="Assets/Someshwar.png" alt="Temple 3">
+            </a>
+            <!-- Add more temple images here -->
+            <div id="temple-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <div id="temple-photos"></div>
+                    <div id="temple-info" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Barkur Temples. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+    
+          // ✅ Apply dark mode if saved in localStorage
+          if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+            const icon = document.getElementById("modeIcon");
+            if (icon) icon.textContent = "☀️";
+          }
+    
+          // ✅ Setup dark mode toggle button
+          document.getElementById("darkModeToggle")?.addEventListener("click", function () {
+            const isDark = document.body.classList.toggle("dark-mode");
+            localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+    
+            const icon = document.getElementById("modeIcon");
+            if (icon) {
+              icon.classList.add("rotate");
+              setTimeout(() => {
+                icon.textContent = isDark ? "☀️" : "🌙";
+                icon.classList.remove("rotate");
+              }, 300);
+            }
+          });
+        });
+    </script>
+    
+    <script src="script.js"></script>
+    <button id="topBtn" title="Go to top">&#8679;</button>
+</body>
+</html>

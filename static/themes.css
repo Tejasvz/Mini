@@ -1,0 +1,165 @@
+/* Theme styles: dark mode and color schemes */
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+    background-color: #1f1f1f;
+}
+
+body.dark-mode .nav-links a {
+    background-color: #333;
+    color: #ffffff;
+}
+
+body.dark-mode .nav-links a:hover {
+    background-color: #444;
+    color: rgb(0, 255, 98);
+}
+
+body.dark-mode .temple-card .content {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #templeList li {
+    background: #1f1f1f;
+    color: #fff;
+}
+
+body.dark-mode .btn,
+body.dark-mode #topBtn {
+    background-color: #00301d;
+}
+
+body.dark-mode .btn:hover,
+body.dark-mode #topBtn:hover {
+    background-color: #005f20;
+}
+
+body.dark-mode .search-section input {
+    background-color: #1e1e1e;
+    color: white;
+    border-color: #444;
+}
+
+body.dark-mode .search-section input::placeholder {
+    color: #aaa;
+}
+
+body.dark-mode #templeList li:hover {
+    background: #1a411a;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background: rgba(63, 63, 63, 0.877);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background: rgb(70, 68, 68);
+    box-shadow: black 0px 0px 10px;
+    transition: 0.3s;
+}
+
+body.dark-mode .logo {
+    color: white;
+}
+
+body.dark-mode .admin-box,
+body.dark-mode .modal-content,
+body.dark-mode .adminPanel {
+    background-color: #1f1f1f;
+    color: white;
+}
+
+body.dark-mode .admin-box h2,
+body.dark-mode .adminPanel h2 {
+    color: white;
+}
+
+body.dark-mode .input-group input {
+    background-color: #333;
+    border-color: #444;
+    color: white;
+}
+
+body.dark-mode .admin-box .input-group input {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    caret-color: black !important;
+}
+
+body.dark-mode .input-group i {
+    color: #aaa;
+}
+
+body.dark-mode .admin-box button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+body.dark-mode .admin-box button:hover {
+    background-color: #45a049;
+}
+
+body.dark-mode .admin-box button:active {
+    transform: scale(0.95);
+}
+
+body.dark-mode .admin-box button:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+body.dark-mode button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+body.dark-mode button:hover {
+    background-color: #45a049;
+}
+
+body.dark-mode a {
+    color: #ffffff; /* light green */
+}
+
+body.dark-mode a:hover {
+    color: #000000;
+}
+
+body.dark-mode .modal-content {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-content a {
+    color: #90ee90;
+}
+
+body.dark-mode .modal-content a:hover {
+    color: #4CAF50;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background-color: #333;
+    color: white;
+    border-color: #555;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #aaa;
+}
