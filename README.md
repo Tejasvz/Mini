@@ -25,19 +25,19 @@ Echo's of Barkur is a web application dedicated to showcasing the rich heritage 
    ```
    cd Mini
    ```
-3. Ensure you have Python and Flask installed. You can install Flask using:
-   ``` 
+3. Ensure you have Python and Flask installed. You can install Python using:
+   ```
    pip install python
    ```
-3.1. Install flask:
+4. Ensure you have Python and Flask installed. You can install Flask using:
    ```
-    pip install flask
+   pip install flask
    ```
-4. Run the Flask application:
+5. Run the Flask application:
    ```
    python3 app.py
    ```
-5. Open your browser and go to:
+6. Open your browser and go to:
    ```
    http://localhost:5000
    ```
