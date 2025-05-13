@@ -29,6 +29,8 @@ Echo's of Barkur is a web application dedicated to showcasing the rich heritage 
    ``` 
    pip install python
    ```
+3.1. Install flask:
+   ```
    pip install flask
    ```
 4. Run the Flask application:
