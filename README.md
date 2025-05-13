@@ -26,6 +26,8 @@ Echo's of Barkur is a web application dedicated to showcasing the rich heritage 
    cd Mini
    ```
 3. Ensure you have Python and Flask installed. You can install Flask using:
+   ``` 
+   pip install python
    ```
    pip install flask
    ```
