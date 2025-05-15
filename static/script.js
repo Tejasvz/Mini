@@ -98,16 +98,6 @@ async function showTempleInfo(templeId) {
 
         modal.style.display = 'block';
 
-        const closeBtn = document.querySelector('.close-btn');
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-            // Remove fullscreen gallery if open
-            closeFullscreenGallery();
-            const gallerySection = document.getElementById('gallerySection');
-            gallerySection.classList.remove('fullscreen');
-            const fullscreenToggleBtn = document.getElementById('fullscreenToggleBtn');
-            if (fullscreenToggleBtn) fullscreenToggleBtn.remove();
-        }
 
         window.onclick = function(event) {
             if (event.target == modal) {
