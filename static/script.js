@@ -81,6 +81,11 @@ async function showTempleInfo(templeId) {
         const modal = document.getElementById('temple-modal');
         const modalContent = document.getElementById('temple-info');
 
+        // Render description paragraphs separately
+        const descriptionHtml = Array.isArray(temple.description)
+            ? temple.description.map(paragraph => `<p>${paragraph}</p>`).join('')
+            : `<p>${temple.description}</p>`;
+
         // Show two buttons: Info and Gallery
         modalContent.innerHTML = `<section class="modal-header">
             <div class="button-group">
@@ -89,7 +94,7 @@ async function showTempleInfo(templeId) {
             </div>
             <div id="infoSection" style="display:none;">
                 <h2>${temple.name}</h2>
-                <p>${temple.description}</p>
+                ${descriptionHtml}
             </div>
             <div id="gallerySection" style="display:none; position: relative;">
                 <p>Loading gallery...</p>
@@ -215,10 +220,26 @@ async function loadTemplesForAdmin() {
         const temples = await response.json();
         const container = document.getElementById('templeList');
 
-container.innerHTML = temples.map(temple => `
+container.innerHTML = temples.map(temple => {
+    let descriptionText = '';
+    if (Array.isArray(temple.description)) {
+        descriptionText = temple.description.join('\n');
+    } else if (typeof temple.description === 'string') {
+        try {
+            const parsed = JSON.parse(temple.description);
+            if (Array.isArray(parsed)) {
+                descriptionText = parsed.join('\n');
+            } else {
+                descriptionText = temple.description;
+            }
+        } catch {
+            descriptionText = temple.description;
+        }
+    }
+    return `
     <div class="temple-edit-card" data-temple-id="${temple.id}">
         <input type="text" id="name-${temple.id}" value="${temple.name}">
-        <textarea id="desc-${temple.id}">${temple.description}</textarea>
+        <textarea id="desc-${temple.id}">${descriptionText}</textarea>
         <input type="text" id="img-${temple.id}" value="${temple.image_url}">
         <div>
             <label>Gallery Photos (comma separated URLs):</label>
@@ -227,7 +248,8 @@ container.innerHTML = temples.map(temple => `
         <button onclick="updateTemple(${temple.id})">Save Changes</button>
         <button onclick="deleteTemple(${temple.id})" style="margin-left: 10px; background-color: #e74c3c; color: white;">Delete</button>
     </div>
-`).join('');
+    `;
+}).join('');
 
         // Load gallery photos for each temple and fill the textarea
         temples.forEach(async (temple) => {
@@ -271,12 +293,13 @@ function addNewTempleForm() {
 async function saveNewTemple() {
     const id = 'new';
     const name = document.getElementById(`name-${id}`).value.trim();
-    const description = document.getElementById(`desc-${id}`).value.trim();
+    const descriptionRaw = document.getElementById(`desc-${id}`).value.trim();
+    const description = descriptionRaw ? descriptionRaw.split('\n').map(p => p.trim()).filter(p => p.length > 0) : [];
     const image_url = document.getElementById(`img-${id}`).value.trim();
     const galleryRaw = document.getElementById(`gallery-${id}`).value.trim();
     const gallery_photos = galleryRaw ? galleryRaw.split(',').map(url => url.trim()).filter(url => url.length > 0) : [];
 
-    if (!name || !description || !image_url) {
+    if (!name || description.length === 0 || !image_url) {
         alert('Please fill in all required fields (name, description, image URL).');
         return;
     }
@@ -307,11 +330,13 @@ document.getElementById('addTempleBtn')?.addEventListener('click', addNewTempleF
 async function updateTemple(id) {
     const galleryPhotosRaw = document.getElementById(`gallery-${id}`).value;
     const galleryPhotos = galleryPhotosRaw.split(',').map(url => url.trim()).filter(url => url.length > 0);
+    const descriptionRaw = document.getElementById(`desc-${id}`).value;
+    const description = descriptionRaw ? descriptionRaw.split('\n').map(p => p.trim()).filter(p => p.length > 0) : [];
 
     const data = {
         id: id,
         name: document.getElementById(`name-${id}`).value,
-        description: document.getElementById(`desc-${id}`).value,
+        description: description,
         image_url: document.getElementById(`img-${id}`).value,
         gallery_photos: galleryPhotos
     };

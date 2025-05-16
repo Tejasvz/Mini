@@ -163,3 +163,45 @@ body.dark-mode input::placeholder,
 body.dark-mode textarea::placeholder {
     color: #aaa;
 }
+
+.about-barkur {
+    padding: 40px 20px;
+    background-color:  #fdf2b3;
+    margin-top: 40px;
+    border-radius: 8px; 
+    max-width: 900px; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.about-barkur h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.about-barkur p {
+    color: #333;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+body.dark-mode .about-barkur {
+    background-color: #333333;
+    color: #f0e68c;
+    padding: 40px 20px;
+    border-radius: 8px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.dark-mode .about-barkur h2 {   
+    color: #9afafa;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+body.dark-mode .about-barkur p {
+    color: #fffefe;
+    font-size: 1.1em;
+    line-height: 1.6;
+}

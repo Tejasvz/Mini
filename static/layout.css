@@ -36,6 +36,7 @@ nav {
 }
 
 footer {
+    position: fixed;
     text-align: center;
     padding: 0px;
     background: #333;

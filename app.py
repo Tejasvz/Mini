@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 import sqlite3
 import os
+import json
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 
@@ -29,11 +30,17 @@ def get_temples():
     cursor.execute("SELECT id, name, image_url, description FROM temples")
     temples = cursor.fetchall()
     conn.close()
+    # Parse description JSON string to list if possible
+    def parse_description(desc):
+        try:
+            return json.loads(desc)
+        except Exception:
+            return [desc] if desc else []
     return jsonify([{
         "id": row[0],
         "name": row[1],
         "image_url": row[2],
-        "description": row[3]
+        "description": parse_description(row[3])
     } for row in temples])
 
 # Endpoint to fetch details of a specific temple
@@ -45,7 +52,11 @@ def get_temple_info(temple_id):
     temple = cursor.fetchone()
     conn.close()
     if temple:
-        return jsonify({"name": temple[0], "description": temple[1]})
+        try:
+            description = json.loads(temple[1])
+        except Exception:
+            description = [temple[1]] if temple[1] else []
+        return jsonify({"name": temple[0], "description": description})
     return jsonify({"error": "Temple not found"}), 404
 
 @app.route('/')
@@ -69,6 +80,11 @@ def update_temple():
         app.logger.error("Missing data in update_temple request")
         return jsonify({'success': False, 'error': 'Missing data'}), 400
 
+    # Convert description list to JSON string if needed
+    description = data['description']
+    if isinstance(description, list):
+        description = json.dumps(description)
+
     conn = get_connection()
     cursor = conn.cursor()
     try:
@@ -76,7 +92,7 @@ def update_temple():
             UPDATE temples 
             SET name = ?, description = ?, image_url = ?
             WHERE id = ?
-        """, (data['name'], data['description'], data['image_url'], data['id']))
+        """, (data['name'], description, data['image_url'], data['id']))
         conn.commit()
 
         # Update gallery photos if provided
@@ -103,8 +119,6 @@ def get_temple_gallery(temple_id):
     conn.close()
     return jsonify([{"url": row[0]} for row in photos])
 
-
-
 @app.route('/admin/add_temple', methods=['POST'])
 def add_temple():
     data = request.get_json()
@@ -114,6 +128,8 @@ def add_temple():
 
     name = data['name']
     description = data['description']
+    if isinstance(description, list):
+        description = json.dumps(description)
     image_url = data['image_url']
     gallery_photos = data.get('gallery_photos', [])
 
