@@ -3,6 +3,23 @@ if (typeof AOS !== 'undefined') {
     AOS.init();
 }
 
+// Function to get directions from user location to Barkur Temples
+function getDirections() {
+    const locationInput = document.getElementById('location');
+    if (!locationInput) {
+        alert('Location input not found.');
+        return;
+    }
+    const startLocation = locationInput.value.trim();
+    if (!startLocation) {
+        alert('Please enter your starting location.');
+        return;
+    }
+    const destination = 'Barkur, Karnataka, India';
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLocation)}&destination=${encodeURIComponent(destination)}`;
+    window.open(directionsUrl, '_blank');
+}
+
 // Top button functionality
 window.onscroll = function() {
     const topBtn = document.getElementById("topBtn");
