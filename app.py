@@ -27,7 +27,7 @@ def temple_info_page(temple_id):
 def get_temples():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, image_url, description FROM temples")
+    cursor.execute("SELECT id, name, image_url, description FROM temples ORDER BY name ASC")
     temples = cursor.fetchall()
     conn.close()
     # Parse description JSON string to list if possible
